@@ -1,0 +1,21 @@
+{
+  "name": "mundos-ia",
+  "version": "1.0.0",
+  "description": "Programa de consola para generar bocetos visuales de mundos imaginarios usando IA",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "keywords": [
+    "mundos-ia",
+    "videojuegos",
+    "inteligencia-artificial",
+    "flux",
+    "sena"
+  ],
+  "author": "Samuel Salcedo",
+  "license": "ISC",
+  "dependencies": {
+    "object-hash": "^3.0.0"
+  }
+}
