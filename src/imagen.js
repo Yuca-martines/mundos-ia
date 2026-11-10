@@ -1,12 +1,6 @@
-// Módulo para consultar el modelo de generación de imágenes y devolver sus bytes
-const fs = require('fs');
-const path = require('path');
+// Modulo para pedir la imagen a la API y devolver sus bytes
 
-/**
- * Consulta la API del modelo de imágenes con la descripción y devuelve el Buffer con los bytes.
- * @param {string} descripcion - Descripción generada en la Parte 3.
- * @returns {Promise<Buffer>} Bytes binarios de la imagen en formato JPEG.
- */
+// Pide la imagen a la API elegida y devuelve los bytes
 async function generarImagen(descripcion) {
   const url = process.env.IMAGEN_URL;
   const apiKey = process.env.IMAGEN_API_KEY;
@@ -140,7 +134,7 @@ async function generarImagen(descripcion) {
     bytes = Buffer.from(artifact.base64, 'base64');
   }
 
-  // Validación final: los bytes no deben estar vacíos
+  // Validación: los bytes no deben estar vacíos
   if (!bytes || bytes.length === 0) {
     throw new Error('Los bytes de la imagen generada están vacíos.');
   }
@@ -151,4 +145,3 @@ async function generarImagen(descripcion) {
 module.exports = {
   generarImagen
 };
-

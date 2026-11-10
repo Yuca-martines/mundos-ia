@@ -1,12 +1,6 @@
-// Módulo para consultar el modelo de lenguaje (texto) y obtener la descripción
-const fs = require('fs');
-const path = require('path');
+// Modulo para pedir la descripcion al modelo de texto
 
-/**
- * Consulta la API del modelo de lenguaje para obtener la descripción de la imagen del mundo.
- * @param {object} mundo - Objeto del mundo leído desde data/mundo_<id>.json.
- * @returns {Promise<string>} Descripción de la imagen generada.
- */
+// Consulta la API del modelo de lenguaje para obtener la descripción
 async function describirMundo(mundo) {
   const url = process.env.TEXTO_URL;
   const apiKey = process.env.TEXTO_API_KEY;
@@ -16,7 +10,7 @@ async function describirMundo(mundo) {
     throw new Error('La variable TEXTO_URL no está definida en el archivo .env.');
   }
 
-  // Mensaje de sistema estricto con las especificaciones del taller
+  // Mensaje de sistema con las especificaciones del taller
   const systemPrompt = 'You are an expert prompt engineer. Based on the provided world JSON, write a single descriptive paragraph in English (between 80 and 120 words) describing a visual image of this scene. Describe the environment, lighting, composition, and artistic style. You must incorporate all 5 colors provided. Do not write stories, lore or markdown, return only the plain image description paragraph.';
 
   const cuerpo = {
@@ -34,7 +28,7 @@ async function describirMundo(mundo) {
     ]
   };
 
-  // Si se usa Pollinations (modelo con razonamiento por defecto), reducir el esfuerzo para evitar timeouts
+  // Si se usa Pollinations, reducir el esfuerzo de razonamiento para evitar timeouts
   if (url.includes('pollinations.ai')) {
     cuerpo.reasoning_effort = 'low';
   }
@@ -75,7 +69,7 @@ async function describirMundo(mundo) {
   const datos = await respuesta.json();
   let descripcion = datos.choices?.[0]?.message?.content?.trim();
 
-  // Validaciones de la descripción según la Parte 3
+  // Validaciones de la descripción
   if (!descripcion) {
     throw new Error('El modelo de texto devolvió una respuesta vacía.');
   }
@@ -91,4 +85,3 @@ async function describirMundo(mundo) {
 module.exports = {
   describirMundo
 };
-

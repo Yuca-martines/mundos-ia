@@ -5,11 +5,9 @@ const { crearMundo, guardarMundo, leerMundo } = require('./mundo');
 const { describirMundo } = require('./texto');
 const { generarImagen } = require('./imagen');
 
-/**
- * Función principal asíncrona que coordina todo el flujo del programa.
- */
+// Función principal que coordina los pasos del programa
 async function main() {
-  // Cargar variables de entorno de forma nativa desde .env (Node.js 20.12+)
+  // Cargar variables de entorno desde .env
   try {
     process.loadEnvFile();
   } catch (error) {
@@ -25,7 +23,6 @@ async function main() {
     const args = process.argv.slice(2);
     const mundo = crearMundo(args);
     if (!mundo) {
-      // Si la validación falló, crearMundo ya mostró el mensaje y asignó exitCode = 1
       return;
     }
 
@@ -80,7 +77,7 @@ async function main() {
   } catch (error) {
     process.exitCode = 1;
 
-    // Manejo de errores explicados en español según las especificaciones de la Parte 5
+    // Manejo de errores explicados en español
     if (error.name === 'TimeoutError') {
       console.error('El servicio tardó demasiado en responder.');
     } else if (error instanceof TypeError) {
@@ -92,4 +89,3 @@ async function main() {
 }
 
 main();
-
