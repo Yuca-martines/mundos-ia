@@ -1,10 +1,10 @@
-// Modulo para pedir la descripcion al modelo de texto
+// Modulo para pedir la descripcion al modelo de texto de Pollinations
 
 // Consulta la API del modelo de lenguaje para obtener la descripción
 async function describirMundo(mundo) {
   const url = process.env.TEXTO_URL;
   const apiKey = process.env.TEXTO_API_KEY;
-  const modelo = process.env.TEXTO_MODELO || 'openai/gpt-oss-20b';
+  const modelo = process.env.TEXTO_MODELO || 'openai';
 
   if (!url) {
     throw new Error('La variable TEXTO_URL no está definida en el archivo .env.');
@@ -15,6 +15,7 @@ async function describirMundo(mundo) {
 
   const cuerpo = {
     model: modelo,
+    reasoning_effort: 'low',
     max_tokens: 500,
     messages: [
       {
@@ -28,16 +29,10 @@ async function describirMundo(mundo) {
     ]
   };
 
-  // Si se usa Pollinations, reducir el esfuerzo de razonamiento para evitar timeouts
-  if (url.includes('pollinations.ai')) {
-    cuerpo.reasoning_effort = 'low';
-  }
-
   const headers = {
     'Content-Type': 'application/json'
   };
 
-  // Solo enviar cabecera Authorization si existe la clave y no es vacía
   if (apiKey && apiKey !== 'ninguna') {
     headers['Authorization'] = `Bearer ${apiKey}`;
   }
